@@ -1,0 +1,12 @@
+[
+    {
+        "date": "2026-04-10",
+        "title": "Sistem Docker Dual-Web Berhasil!",
+        "content": "Berhasil menjalankan 2 website di WSL Kali Linux menggunakan Docker Compose. Siap lanjut ke tahap scripting C#."
+    },
+    {
+        "date": "2026-04-09",
+        "title": "Migrasi Environment",
+        "content": "Memindahkan project dari root ke home user Beta. VS Code terintegrasi dengan baik."
+    }
+]

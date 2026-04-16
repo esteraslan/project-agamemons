@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agamemons-deployment
+spec:
+  replicas: 2 # Kita jalankan 2 "copy" website kamu sekaligus!
+  selector:
+    matchLabels:
+      app: agamemons-web
+  template:
+    metadata:
+      labels:
+        app: agamemons-web
+    spec:
+      containers:
+      - name: web-profile
+        image: agamemons-site:v6 # Image yang kita build tadi
+        imagePullPolicy: Never # Pakai image lokal dari Docker kamu
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: agamemons-service
+spec:
+  type: NodePort
+  selector:
+    app: agamemons-web
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080 # Port yang bisa kita tembak nanti

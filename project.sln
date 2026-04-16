@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "agamemons-web", "agamemons-web.csproj", "{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BD23856-BAF2-0BE7-3F26-A16A7CF30240}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEE5FBB2-7205-48CF-B420-49ED41534561}
+	EndGlobalSection
+EndGlobal

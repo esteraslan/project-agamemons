@@ -1,0 +1,13 @@
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+.idea/
+.vscode/
+*.Zone.Identifier
+.env/
+# JANGAN PUSH FILE INI UNTUK KEAMANAN
+firebase-key.json
+.env

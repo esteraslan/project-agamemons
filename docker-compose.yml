@@ -1,0 +1,22 @@
+services:
+  # Website 1: Personal Profile (Agamemons)
+  personal-site:
+    build: .
+    container_name: agamemons_profile
+    ports:
+      - "8080:80"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY} # GANTI DENGAN API KEY BARU KAMU
+    volumes:
+      - ./wwwroot:/app/wwwroot
+    restart: always
+
+  # Website 2: Company Profile
+  company-site:
+    image: nginx:alpine
+    container_name: company_profile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./company-wwwroot:/usr/share/nginx/html
+    restart: always
