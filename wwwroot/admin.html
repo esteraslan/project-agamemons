@@ -1,215 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grimoire Editor | Agamemons</title>
-
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="admin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<body class="notranslate">
+<div class="admin-container">
+    <div class="editor-card">
+        <header class="editor-header">
+            <h2 id="editor-title"><i class="fas fa-scroll"></i> Grimoire Editor</h2>
+            <p style="font-size: 12px; color: #8b949e; margin-top: 10px;">Forge your lore into the digital void.</p>
+        </header>
 
-<body>
+        <form id="adminStoryForm">
+            <div class="form-group">
+                <label><i class="fas fa-signature"></i> Title of Fragment</label>
+                <input type="text" id="title" placeholder="e.g., The Ancient Docker Script" required>
+            </div>
 
-    <div class="admin-container">
-        <div class="editor-card">
-            <header class="editor-header">
-                <h2 id="editor-title"><i class="fas fa-scroll"></i> Grimoire Editor</h2>
-            </header>
-
-            <form id="adminStoryForm">
-                <div class="form-group">
-                    <label>Title of Fragment</label>
-                    <input type="text" id="title" placeholder="e.g., The Ancient Docker Script" required>
+            <div class="form-group" style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px;">
+                <div>
+                    <label><i class="fas fa-eye"></i> Excerpt (Teaser)</label>
+                    <input type="text" id="excerpt" placeholder="Brief summary..." required>
                 </div>
-
-                <div class="form-group" style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-                    <div>
-                        <label>Excerpt (Teaser)</label>
-                        <input type="text" id="excerpt" placeholder="Brief summary..." required>
-                    </div>
-                    <div>
-                        <label>Category</label>
-                        <select id="category">
-                            <option value="LORE">LORE</option>
-                            <option value="TECH">TECH</option>
-                            <option value="QUEST">QUEST</option>
-                        </select>
-                    </div>
+                <div>
+                    <label><i class="fas fa-tags"></i> Category</label>
+                    <select id="category">
+                        <option value="LORE">LORE</option>
+                        <option value="TECH">TECH</option>
+                        <option value="DEVOPS">DEVOPS</option>
+                        <option value="QUEST">QUEST</option>
+                    </select>
                 </div>
-
-                <div class="form-group">
-                    <label>Fragment Content (Markdown/HTML Support)</label>
-                    <textarea id="content" rows="12" placeholder="Write the lore here..." required></textarea>
-                </div>
-
-                <div style="display: flex; gap: 10px;">
-                    <button type="submit" class="cast-btn" id="submitBtn" style="flex: 2;">
-                        <i class="fas fa-wand-sparkles"></i> Cast Fragment
-                    </button>
-                    <button type="button" id="cancelBtn" class="tab-btn"
-                        style="display: none; flex: 1; background: #30363d;" onclick="resetForm()">
-                        Cancel
-                    </button>
-                </div>
-            </form>
-
-            <div id="msg-status"></div>
-
-            <div class="edit-list" style="margin-top: 40px; border-top: 1px solid #30363d; padding-top: 20px;">
-                <label style="color: var(--accent); font-weight: bold; margin-bottom: 15px; display: block;">
-                    <i class="fas fa-list"></i> Existing Fragments (Click to Edit)
-                </label>
-                <div id="admin-story-list">
-                    <p style="color: #8b949e; font-size: 13px;">Loading scrolls from database...</p>
+                <div>
+                    <label><i class="fas fa-gem"></i> Rarity</label>
+                    <select id="rarity">
+                        <option value="Common" style="color: #58a6ff;">Common</option>
+                        <option value="Mythic" style="color: #e3b341;">Mythic</option>
+                        <option value="Artifact" style="color: #a371f7;">Artifact</option>
+                    </select>
                 </div>
             </div>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="index.html" class="tab-btn" style="text-decoration: none;">
-                    <i class="fas fa-arrow-left"></i> Return to Sanctuary
-                </a>
+            <div class="form-group">
+                <label><i class="fas fa-feather-alt"></i> Fragment Content</label>
+                <textarea id="content" rows="12" placeholder="Write the dark fantasy lore here..." required></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="cast-btn" id="submitBtn" style="flex: 2;">
+                    <i class="fas fa-wand-sparkles"></i> Cast Fragment
+                </button>
+                <button type="button" id="cancelBtn" class="cancel-btn" style="display: none; flex: 1;" onclick="resetForm()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </form>
+
+        <div id="msg-status"></div>
+
+        <div class="edit-list">
+            <label><i class="fas fa-book-dead"></i> Existing Fragments</label>
+            <div id="admin-story-list">
+                <p style="color: #8b949e; font-size: 13px; text-align: center;">Reading the ancient scrolls...</p>
             </div>
         </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="return-link">
+                <i class="fas fa-arrow-left"></i> Return to Sanctuary
+            </a>
+        </div>
     </div>
-
-    <script>
-        let editingId = null; // Menyimpan ID jika sedang dalam mode edit
-
-        // 1. Fungsi untuk mengambil daftar cerita dari API
-        async function loadAdminList() {
-            try {
-                const res = await fetch('http://localhost:8080/api/story');
-                const stories = await res.json();
-                const container = document.getElementById('admin-story-list');
-
-                if (stories.length === 0) {
-                    container.innerHTML = "<p style='color: #8b949e; font-size: 13px;'>No fragments found.</p>";
-                    return;
-                }
-
-                container.innerHTML = stories.map(s => `
-                    <div class="edit-item" style="display: flex; justify-content: space-between; align-items: center; background: #0d1117; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #30363d;">
-                        <span style="color: #c9d1d9; font-size: 14px;">${s.title}</span>
-                        <button class="btn-edit-small" onclick="prepareEdit('${s.id}')" style="background: var(--accent); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error("Failed to load list:", err);
-            }
-        }
-
-        // 2. Fungsi untuk memasukkan data ke form saat tombol Edit diklik
-        // Perbaiki fungsi prepareEdit agar lebih 'tahan banting'
-        async function prepareEdit(id) {
-            try {
-                const res = await fetch('http://localhost:8080/api/story');
-                const stories = await res.json();
-                // Cek s.id (kecil) atau s.Id (besar)
-                const story = stories.find(s => (s.id || s.Id) === id);
-
-                if (story) {
-                    editingId = id;
-                    // Gunakan OR (||) untuk antisipasi perbedaan huruf besar/kecil
-                    document.getElementById('title').value = story.title || story.Title;
-                    document.getElementById('excerpt').value = story.excerpt || story.Excerpt;
-                    document.getElementById('category').value = story.category || story.Category;
-                    document.getElementById('content').value = story.content || story.Content;
-
-                    // Ubah UI menjadi mode Edit
-                    document.getElementById('editor-title').innerHTML = '<i class="fas fa-pen-nib"></i> Edit Fragment';
-                    const submitBtn = document.getElementById('submitBtn');
-                    submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Fragment';
-                    submitBtn.style.background = 'linear-gradient(135deg, #f1e05a, #d4a017)'; // Warna Emas/Kuning
-                    document.getElementById('cancelBtn').style.display = 'block';
-
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            } catch (err) {
-                alert("Failed to retrieve fragment data.");
-            }
-        }
-
-        // 3. Fungsi untuk reset form ke mode Tambah (POST)
-        function resetForm() {
-            editingId = null;
-            document.getElementById('adminStoryForm').reset();
-            document.getElementById('editor-title').innerHTML = '<i class="fas fa-scroll"></i> Grimoire Editor';
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.innerHTML = '<i class="fas fa-wand-sparkles"></i> Cast Fragment';
-            submitBtn.style.background = ''; // Balik ke CSS asli
-            document.getElementById('cancelBtn').style.display = 'none';
-            document.getElementById('msg-status').style.display = 'none';
-        }
-
-        // 4. Handle Submit (POST atau PUT)
-        document.getElementById('adminStoryForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('submitBtn');
-            const msg = document.getElementById('msg-status');
-
-            const data = {
-                Title: document.getElementById('title').value,
-                Excerpt: document.getElementById('excerpt').value,
-                Category: document.getElementById('category').value,
-                Content: document.getElementById('content').value
-            };
-
-            const method = editingId ? 'PUT' : 'POST';
-            const url = editingId ? `http://localhost:8080/api/story/${editingId}` : 'http://localhost:8080/api/story';
-
-            btn.disabled = true;
-            btn.innerHTML = editingId ? '<i class="fas fa-spinner fa-spin"></i> Updating...' : '<i class="fas fa-spinner fa-spin"></i> Casting...';
-
-            try {
-                const res = await fetch(url, {
-                    method: method,
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                msg.style.display = 'block';
-                if (res.ok) {
-                    msg.className = 'success';
-                    msg.innerHTML = editingId ? '<i class="fas fa-check-circle"></i> Fragment updated successfully!' : '<i class="fas fa-check-circle"></i> Fragment added to Grimoire!';
-
-                    if (!editingId) document.getElementById('adminStoryForm').reset();
-                    else setTimeout(resetForm, 2000); // Reset ke mode tambah setelah 2 detik jika edit sukses
-
-                    loadAdminList(); // Refresh list di bawah
-                } else {
-                    msg.className = 'error';
-                    msg.innerHTML = '<i class="fas fa-times-circle"></i> Action failed. Check server.';
-                }
-            } catch (err) {
-                msg.style.display = 'block';
-                msg.className = 'error';
-                msg.innerText = "Portal Connection Error.";
-            } finally {
-                btn.disabled = false;
-                if (!editingId) btn.innerHTML = '<i class="fas fa-wand-sparkles"></i> Cast Fragment';
-            }
-        });
-
-        // Load list saat pertama kali buka
-        loadAdminList();
-        // Tambahkan ini di bagian paling bawah script admin.html
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const editId = urlParams.get('edit');
-
-            if (editId) {
-                // Tunggu sebentar sampai list terload, lalu jalankan prepareEdit
-                setTimeout(() => {
-                    prepareEdit(editId);
-                }, 500);
-            }
-        };
-    </script>
+</div>
+<script src="js/admin.js"></script>
 </body>
-
 </html>

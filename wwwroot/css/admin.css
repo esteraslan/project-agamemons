@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;700&display=swap');
+
+:root {
+    --bg-admin: #05070a;
+    --card-admin: rgba(13, 17, 23, 0.98);
+    --accent: #58a6ff;
+    --gold: #f1e05a;
+    --border: #30363d;
+}
+
+body {
+    background: var(--bg-admin);
+    color: #c9d1d9;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.admin-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.editor-card {
+    background: var(--card-admin);
+    border: 1px solid var(--border);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8), inset 0 0 20px rgba(88,166,255,0.05);
+}
+
+.editor-header h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--accent);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+}
+
+.form-group { margin-bottom: 20px; }
+
+label {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    background: #010409;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #fff;
+    transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+    outline: none;
+}
+
+.cast-btn {
+    background: linear-gradient(135deg, #1f6feb, #58a6ff);
+    color: white; border: none; padding: 15px;
+    border-radius: 6px; font-weight: bold; cursor: pointer;
+    transition: 0.3s;
+}
+
+.cast-btn.update-mode {
+    background: linear-gradient(135deg, #d4a017, #f1e05a);
+    color: #000;
+}
+
+.cast-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+
+.cancel-btn {
+    background: #21262d; color: #fff; border: 1px solid var(--border);
+    padding: 15px; border-radius: 6px; cursor: pointer;
+}
+
+.edit-item {
+    background: #0d1117; padding: 15px; border: 1px solid var(--border);
+    border-radius: 8px; margin-top: 10px; display: flex;
+    justify-content: space-between; align-items: center;
+}
+
+.item-title { font-weight: bold; font-size: 14px; display: block; }
+.item-cat { font-size: 10px; color: var(--accent); }
+
+.btn-edit-small, .btn-delete-small {
+    padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px;
+}
+
+.btn-edit-small { background: #238636; color: white; }
+.btn-delete-small { background: #da3633; color: white; }
+
+.success { color: #3fb950; text-align: center; padding: 10px; margin-top: 10px; }
+
+.return-link {
+    color: #8b949e; text-decoration: none; font-size: 13px;
+    transition: 0.3s; display: inline-block;
+}
+.return-link:hover { color: var(--accent); }

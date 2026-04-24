@@ -8,322 +8,506 @@
     <meta name="description" content="Agamemons Portfolio - IT Specialist & DevTechOps Explorer">
     <meta property="og:title" content="Agamemons | Zarek Zevan">
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="status-toast">Stats Synced!</div>
+<div id="status-toast">Stats Synced!</div>
 
-    <div class="container">
-        <header class="profile-header" style="text-align: center; margin-bottom: 30px;">
-            <h1 id="hero-name">Agamemons Zarek Zevan</h1>
-            <p class="subtitle" style="color: var(--accent); margin-top: 10px;">IT Specialist | DevTechOps Explorer |
-                Future Game Dev</p>
-            <div class="header-energy">
-                <div class="energy-bar"></div>
-                <span style="font-family: 'Courier New', monospace; font-size: 10px;">MANA LEVEL: 100%</span>
-            </div>
-        </header>
+<div class="container">
+    <header class="profile-header" style="text-align: center; margin-bottom: 30px;">
+        <h1 id="hero-name">Agamemons Zarek Zevan</h1>
+        <p class="subtitle" style="color: var(--accent); margin-top: 10px;">IT Specialist | DevTechOps Explorer | Future Game Dev</p>
+        <div class="header-energy">
+            <div class="energy-bar"></div>
+            <span style="font-family: 'Courier New', monospace; font-size: 10px;">MANA LEVEL: 100%</span>
+        </div>
+    </header>
 
-        <nav class="tabs">
-            <button class="tab-btn" onclick="openTab(event, 'home')">Beranda</button>
-            <button class="tab-btn" onclick="openTab(event, 'story')">Grimoire</button>
-            <button class="tab-btn" onclick="openTab(event, 'projects')">Armory</button>
-            <button class="tab-btn" onclick="openTab(event, 'quests')">Quest Log</button>
-            <button class="tab-btn" onclick="openTab(event, 'about')">Siapa Aku</button>
-        </nav>
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'home')">Beranda</button>
+        <button class="tab-btn" onclick="openTab(event, 'story')">Grimoire</button>
+        <button class="tab-btn" onclick="openTab(event, 'projects')">Project</button>
+        <button class="tab-btn" onclick="openTab(event, 'quests')">Main Quest</button>
+        <button class="tab-btn" onclick="openTab(event, 'about')">About Me</button>
+    </nav>
 
-        <div id="home" class="tab-content active" style="display: block;">
-            <div class="card" id="game-stats-box">
-                <h3><i class="fas fa-shield-alt"></i> Character Stats (Live)</h3>
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <p style="color: #8b949e; font-size: 13px;"><i class="fas fa-spinner fa-spin"></i> Summoning profile from cloud...</p>
-                    <div class="progress-bg"><div class="progress-fill hp" style="width: 0%"></div></div>
-                    <div class="progress-bg"><div class="progress-fill mana" style="width: 0%"></div></div>
-                </div>
-                <!-- <p style="color: #8b949e;">Syncing with core grimoire...</p> -->
+    <div id="home" class="tab-content active" style="display: block;">
+        <div class="card" id="game-stats-box">
+            <h3><i class="fas fa-shield-alt"></i> Character Stats (Live)</h3>
+
+            <div id="stats-loading">
+                <p style="color: #8b949e; font-size: 13px;">
+                    <i class="fas fa-spinner fa-spin"></i> Summoning profile from cloud...
+                </p>
             </div>
 
-            <div class="card terminal-box">
-                <div class="terminal-header">
-                    <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                    <span class="terminal-title"
-                        style="font-size: 11px; margin-left: 10px; color: #8b949e;">guest@agamemons:~</span>
+            <div id="stats-content" style="display: none; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                    <span>HP</span> <span id="hp-text">0 / 100</span>
                 </div>
-                <div id="terminal-body">
-                    <p class="term-text">Type 'help' to see commands...</p>
-                    <div class="input-line" style="display: flex; align-items: center;">
-                        <span class="prompt"
-                            style="color: var(--green); font-weight: bold; margin-right: 10px;">>></span>
-                        <input type="text" id="term-input" autocomplete="off" placeholder="..."
-                            style="background:transparent; border:none; color:#fff; outline:none; flex:1;">
-                    </div>
-                </div>
-            </div>
+                <div class="progress-bg"><div id="hp-bar" class="progress-fill hp" style="width: 0%"></div></div>
 
-            <div class="card">
-                <h3 style="border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px;">Adventure Logs
-                </h3>
-
-                <div class="daily-quest-container">
-                    <div class="daily-quest-card" 
-                         style="background: rgba(88, 166, 255, 0.05); padding: 15px; border-radius: 12px; border: 1px solid rgba(88, 166, 255, 0.2);">
-                        
-                        <div class="quest-header" style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 style="margin: 0; font-size: 1rem;"><i class="fas fa-scroll"></i> Daily Quest</h3>
-                            <div class="quest-reward" style="color: #e3b341; font-size: 11px; font-weight: bold;">+250 XP / +10 HP</div>
-                        </div>
-                
-                        <p id="daily-quest-text" style="font-style: italic; font-size: 14px; color: #acb6c0; margin-top: 10px;">
-                            "Bersihkan container Docker yang tidak terpakai (Prune)."
-                        </p>
-                        
-                        <button class="ambient-btn" onclick="completeDailyQuest(250, 10)" 
-                                style="width: 100%; margin-top: 15px; background: linear-gradient(90deg, #238636, #2ea043); color: white; border: none; cursor: pointer;">
-                            <i class="fas fa-check"></i> Mark as Completed
-                        </button>
-                    </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-top: 5px;">
+                    <span>MANA</span> <span id="mana-text">0 / 100</span>
                 </div>
-                <div id="updates-container" style="margin-top: 20px;">
-                    <div class="update-item"
-                        style="border-left: 2px solid var(--accent); padding-left: 15px; margin-bottom: 15px;">
-                        <span style="font-size: 10px; color: #8b949e;">2026-04-11</span>
-                        <p style="margin: 5px 0; font-size: 14px;">Portal Grimoire upgraded with Local API & Docker
-                            integration.</p>
-                    </div>
-                </div>
+                <div class="progress-bg"><div id="mana-bar" class="progress-fill mana" style="width: 0%"></div></div>
             </div>
         </div>
 
-        <div id="story" class="tab-content">
-            <div id="story-list">
-                <div class="card">
-                    <h2 class="about-title" style="text-align: center; color: var(--accent);">Grimoire Fragments</h2>
-
-                    <div class="search-container" style="position: relative; margin: 20px 0;">
-                        <i class="fas fa-search search-icon"
-                            style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #8b949e;"></i>
-                        <input type="text" id="story-search" placeholder="Cari mantra atau fragmen..."
-                            onkeyup="filterStories()"
-                            style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #30363d; color: #fff; padding: 12px 15px 12px 45px; border-radius: 8px; outline: none;">
-                    </div>
-
-                    <div id="story-container">
-                    </div>
-
-                    <div class="pagination" id="story-pagination"
-                        style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px;">
-                        <button class="ambient-btn" onclick="prevPage()"><i class="fas fa-arrow-left"></i>
-                            Previous</button>
-                        <span id="page-info" style="font-family: 'Courier New', monospace; font-size: 13px;">Page 1 of
-                            1</span>
-                        <button class="ambient-btn" onclick="nextPage()">Next <i
-                                class="fas fa-arrow-right"></i></button>
-                    </div>
-                </div>
+        <div class="card terminal-box">
+            <div class="terminal-header">
+                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                <span class="terminal-title" style="font-size: 11px; margin-left: 10px; color: #8b949e;">guest@agamemons:~</span>
             </div>
+            <div id="terminal-body" style="height: 180px; overflow-y: auto; padding: 10px; font-family: 'Courier New', monospace;">
+            </div>
+        </div>
 
-            <div id="story-reader" style="display: none; position: relative;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <button class="ambient-btn" onclick="backToStoryList()"><i class="fas fa-arrow-left"></i> Back to
-                        List</button>
-
-                    <button id="quick-edit-btn" class="ambient-btn"
-                        style="background: rgba(88, 166, 255, 0.1); border: 1px solid var(--accent); font-size: 12px;">
-                        <i class="fas fa-magic"></i> Edit Fragment
+        <div class="card">
+            <h3 style="border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px;">Adventure Logs</h3>
+            <div class="daily-quest-container">
+                <div class="daily-quest-card">
+                    <div class="quest-header" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0; font-size: 1rem;"><i class="fas fa-scroll"></i> Daily Quest</h3>
+                        <div class="quest-reward">+250 XP / +10 HP</div>
+                    </div>
+                    <p id="daily-quest-text" style="font-style: italic; font-size: 14px; color: #acb6c0; margin-top: 10px;">"Bersihkan container Docker yang tidak terpakai (Prune)."</p>
+                    <button class="ambient-btn" onclick="completeDailyQuest(250, 10)" style="width: 100%; margin-top: 15px; background: linear-gradient(90deg, #238636, #2ea043); color: white; border: none; cursor: pointer;">
+                        <i class="fas fa-check"></i> Mark as Completed
                     </button>
                 </div>
-
-                <div class="card" id="full-story-content" style="line-height: 1.8;">
+            </div>
+            <div id="updates-container" style="margin-top: 20px;">
+                <div class="update-item" style="border-left: 2px solid var(--accent); padding-left: 15px; margin-bottom: 15px;">
+                    <span style="font-size: 10px; color: #8b949e;">2026-04-11</span>
+                    <p style="margin: 5px 0; font-size: 14px;">Portal Grimoire upgraded with Local API & Docker integration.</p>
                 </div>
             </div>
         </div>
-
-        <div id="projects" class="tab-content">
+    </div>
+    <div id="story" class="tab-content" style="display: none;">
+        <div id="story-list">
             <div class="card">
-                <div class="equipment-section"
-                    style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 12px; border: 1px solid #30363d; margin-bottom: 30px;">
-                    <h3 class="equipment-title" style="text-align: center; margin-bottom: 20px;"><i
-                            class="fas fa-shield-halved"></i> Current Loadout</h3>
-                    <div class="equipment-grid"
-                        style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                        <div class="eq-slot" title="Main Weapon"
-                            style="text-align: center; padding: 15px; border: 1px solid #30363d; border-radius: 10px; width: 120px;">
-                            <div class="eq-icon" style="font-size: 24px; color: var(--accent);"><i
-                                    class="fas fa-microchip"></i></div>
-                            <div class="eq-info" style="margin-top: 8px;"><strong
-                                    style="display:block; font-size:12px;">Runeblade</strong><span
-                                    style="font-size:10px; color:#8b949e;">C# / .NET</span></div>
-                        </div>
-                        <div class="eq-slot" title="Defense"
-                            style="text-align: center; padding: 15px; border: 1px solid #30363d; border-radius: 10px; width: 120px;">
-                            <div class="eq-icon" style="font-size: 24px; color: var(--accent);"><i
-                                    class="fab fa-docker"></i></div>
-                            <div class="eq-info" style="margin-top: 8px;"><strong
-                                    style="display:block; font-size:12px;">Shield</strong><span
-                                    style="font-size:10px; color:#8b949e;">Docker</span></div>
-                        </div>
-                        <div class="eq-slot" title="Accessory"
-                            style="text-align: center; padding: 15px; border: 1px solid #30363d; border-radius: 10px; width: 120px;">
-                            <div class="eq-icon" style="font-size: 24px; color: var(--accent);"><i
-                                    class="fas fa-cubes"></i></div>
-                            <div class="eq-info" style="margin-top: 8px;"><strong
-                                    style="display:block; font-size:12px;">Ring</strong><span>K8s</span></div>
-                        </div>
-                    </div>
+                <h2 class="about-title" style="text-align: center; color: var(--accent);">Grimoire Fragments</h2>
+
+                <div class="search-container" style="position: relative; margin: 20px 0;">
+                    <i class="fas fa-search search-icon" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #8b949e;"></i>
+                    <input type="text" id="story-search" placeholder="Cari mantra atau fragmen..." onkeyup="filterStories()" style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #30363d; color: #fff; padding: 12px 15px 12px 45px; border-radius: 8px; outline: none;">
                 </div>
 
-                <h2 class="about-title" style="text-align: center;">⚔️ Armory (Project List)</h2>
-                <div class="project-item-box"
-                    style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid #30363d;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="color: var(--accent); margin: 0;">🛡️ Agamemons K8s Cluster</h4>
-                        <span class="quest-status done"
-                            style="font-size: 10px; color: var(--green); border: 1px solid var(--green); padding: 2px 8px; border-radius: 4px;">ACTIVE</span>
-                    </div>
-                    <p style="font-size: 14px; color: #acb6c0; margin: 10px 0;">Difficulty: <span
-                            style="color: var(--red);">★★★★☆</span></p>
-                    <div class="progress-bg"
-                        style="background: #21262d; height: 6px; border-radius: 3px; overflow: hidden;">
-                        <div class="progress-fill mana" style="width: 100%; height: 100%; background: var(--accent);">
-                        </div>
-                    </div>
-                    <div style="margin-top: 15px;">
-                        <a href="https://github.com/agamemons" target="_blank" class="ambient-btn"
-                            style="text-decoration: none; font-size: 11px;">
-                            <i class="fab fa-github"></i> View Source
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <div id="story-container"></div>
 
-        <div id="quests" class="tab-content">
-            <div class="card">
-                <h2 class="about-title" style="text-align: center;">⚔️ Current Quests</h2>
-                <div id="quest-log-display">
-                </div>
-            </div>
-        </div>
-
-        <div id="about" class="tab-content">
-            <div class="card">
-                <h2 class="about-title" style="text-align: center; font-family: 'Cinzel', serif;">About Me</h2>
-
-                <div class="profile-header" style="text-align: center; margin-bottom: 35px;">
-                    <div class="profile-avatar"
-                        style="width: 140px; height: 140px; margin: 0 auto 20px; border: 3px solid var(--accent); border-radius: 50%; overflow: hidden; box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);">
-                        <img src="img/your-photo.jpg" alt="Deny Adi Faldano"
-                            style="width: 100%; height: 100%; object-fit: cover;">
-                    </div>
-                    <p
-                        style="color: var(--accent); font-family: 'Courier New', monospace; font-size: 14px; margin-top: 5px;">
-                        [ IT Service Desk Technical Specialist ]</p>
+                <div class="pagination" id="story-pagination" style="display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px;">
+                    <button class="ambient-btn" onclick="prevPage()"><i class="fas fa-arrow-left"></i> Previous</button>
+                    <span id="page-info" style="font-family: 'Courier New', monospace; font-size: 13px;">Page 1 of 1</span>
+                    <button class="ambient-btn" onclick="nextPage()">Next <i class="fas fa-arrow-right"></i></button>
                 </div>
 
-                <div class="description-text"
-                    style="text-align: center; color: #acb6c0; line-height: 1.8; max-width: 600px; margin: 0 auto;">
-                    <p>
-                        A technology knight dedicated to the craft.
-                        I bridge the world of technical support with a strong ambition in <strong>DevOps</strong> and
-                        <strong>Cloud Infrastructure</strong>.
-                    </p>
-                    <p>
-                        To me, code is a spell and containers are fortresses. Beyond maintaining system stability,
-                        I am also an enthusiastic <strong>Game Tester</strong> and a fan of <strong>Dark
-                            Fantasy</strong> aesthetics.
-                    </p>
-                    <p>
-                        In my spare time, I forge creativity through <strong>3D Modeling (Blender & ZBrush)</strong>
-                        and continuously sharpen my language skills to break through global boundaries.
-                    </p>
-                </div>
-
-                <div class="skill-grid"
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 15px; margin-top: 40px;">
-                    <div class="skill-card" title="Infrastructure">
-                        <i class="fab fa-docker" style="font-size: 28px; color: var(--accent);"></i>
-                        <p style="font-size: 12px; margin-top: 10px; font-weight: bold;">Docker / K8s</p>
-                    </div>
-                    <div class="skill-card" title="Programming">
-                        <i class="fas fa-code" style="font-size: 28px; color: var(--accent);"></i>
-                        <p style="font-size: 12px; margin-top: 10px; font-weight: bold;">C# .NET Core</p>
-                    </div>
-                    <div class="skill-card" title="3D Art">
-                        <i class="fas fa-cube" style="font-size: 28px; color: var(--accent);"></i>
-                        <p style="font-size: 12px; margin-top: 10px; font-weight: bold;">Blender Art</p>
-                    </div>
-                    <div class="skill-card" title="Cloud Strategy">
-                        <i class="fas fa-cloud" style="font-size: 28px; color: var(--accent);"></i>
-                        <p style="font-size: 12px; margin-top: 10px; font-weight: bold;">Cloud Platform</p>
-                    </div>
-                </div>
-
-                <div class="rpg-medals-section"
-                    style="margin-top: 50px; border-top: 1px solid #30363d; padding-top: 30px; text-align: center;">
-                    <h3 class="medals-title" style="margin-bottom: 20px;"><i class="fas fa-medal"></i> Earned Mastery
+                <div id="inventory-section" style="margin-top: 30px; border-top: 1px solid #30363d; padding-top: 20px;">
+                    <h3 style="color: var(--accent); font-family: 'Cinzel', serif; margin-bottom: 15px;">
+                        <i class="fas fa-toolbox"></i> Sacred Inventory
                     </h3>
-                    <div class="rpg-medals-container"
-                        style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                        <div class="rpg-medal-box" title="Language Proficiency"
-                            style="padding: 10px 20px; background: rgba(88, 166, 255, 0.05); border: 1px solid #30363d; border-radius: 12px; font-size: 12px; color: #fff;">
-                            <i class="fas fa-torii-gate" style="color: #ff7b72;"></i> JLPT N5 Certified
-                        </div>
-                        <div class="rpg-medal-box" title="Security & Protection"
-                            style="padding: 10px 20px; background: rgba(88, 166, 255, 0.05); border: 1px solid #30363d; border-radius: 12px; font-size: 12px; color: #fff;">
-                            <i class="fas fa-shield-halved" style="color: var(--accent);"></i> Cloud Protector
-                        </div>
-                        <div class="rpg-medal-box" title="Creative Vision"
-                            style="padding: 10px 20px; background: rgba(88, 166, 255, 0.05); border: 1px solid #30363d; border-radius: 12px; font-size: 12px; color: #fff;">
-                            <i class="fas fa-paint-brush" style="color: #e3b341;"></i> 3D Modeler
-                        </div>
+                    <div id="inventory-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px;">
                     </div>
                 </div>
 
-                <div class="contact-card"
-                    style="margin-top: 45px; text-align: center; background: linear-gradient(135deg, rgba(88, 166, 255, 0.1), transparent); border: 1px solid rgba(88, 166, 255, 0.2); border-radius: 16px; padding: 30px;">
-                    <h3 style="margin-top: 0;">📬 Dispatch a Messenger</h3>
-                    <p style="color: #8b949e; font-size: 14px; margin-bottom: 25px;">Ingin berdiskusi tentang
-                        infrastruktur cloud atau kolaborasi proyek 3D?</p>
-                    <a href="mailto:deny.faldano@example.com" class="ambient-btn"
-                        style="text-decoration: none; display: inline-flex; justify-content: center; width: auto; min-width: 200px;">
-                        <i class="fas fa-paper-plane"></i> Send Secret Scroll
-                    </a>
-                    <button class="ambient-btn" onclick="resetHeroStats()"  style="text-decoration: none; display: inline-flex; justify-content: center; width: auto; min-width: 200px;">
-                        <i class="fas fa-undo"></i> Reset Hero Stats
+                <div class="admin-access-area" style="text-align: center; margin: 40px 0 20px 0;">
+                    <button onclick="window.location.href='admin.html'" class="ritual-btn">
+                        <i class="fas fa-plus-circle"></i> Forge New Fragment
                     </button>
                 </div>
             </div>
         </div>
 
-        <footer>
-            <div class="footer-content"
-                style="text-align: center; padding: 40px 0; border-top: 1px solid #30363d; margin-top: 50px;">
-                <p style="font-size: 12px; color: #8b949e;">&copy; 2026 Agamemons. All Rights Reserved.</p>
-                <div class="footer-controls"
-                    style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                    <div class="social-links" style="display: flex; gap: 20px;">
-                        <a href="#" class="soc-icon" style="color: #8b949e; font-size: 20px;"><i
-                                class="fab fa-facebook"></i></a>
-                        <a href="#" class="soc-icon" style="color: #8b949e; font-size: 20px;"><i
-                                class="fab fa-instagram"></i></a>
-                        <a href="#" class="soc-icon" style="color: #8b949e; font-size: 20px;"><i
-                                class="fab fa-youtube"></i></a>
-                    </div>
-                    <button id="ambient-toggle" class="ambient-btn" onclick="toggleMusic()" style="position: relative; z-index: 10; font-size: 11px;">
-                        <i class="fas fa-music"></i> Ambient: <span id="music-status">OFF</span>
-                    </button>
-                    <audio id="bg-music" loop src="audio/Avanti - Time.mp3"></audio>
+        <div id="story-reader" style="display: none; animation: fadeIn 0.8s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button class="ambient-btn" onclick="backToStoryList()"><i class="fas fa-arrow-left"></i> Return to Grimoire</button>
+                <button id="quick-edit-btn" class="ambient-btn" style="border-color: var(--accent); color: var(--accent);">
+                    <i class="fas fa-pen-nib"></i> Edit Lore
+                </button>
             </div>
-        </footer>
+
+            <div class="archive-header-status" style="display: flex; align-items: center; gap: 20px; background: rgba(22, 27, 34, 0.4); padding: 20px; border-radius: 8px; border: 1px solid #30363d;">
+                <div class="header-totem" style="display: flex; flex-direction: column; align-items: center; padding-right: 20px; border-right: 1px solid #30363d;">
+                    <i class="fas fa-scroll totem-icon" style="font-size: 40px; margin-bottom: 10px;"></i>
+                    <div id="archive-rarity-badge" class="rarity-badge" style="font-family: 'Courier New', monospace; font-size: 10px; letter-spacing: 2px; border: 1px solid var(--accent); padding: 4px 12px; color: var(--accent);">COMMON</div>
+                </div>
+
+                <div class="header-stats" style="display: flex; flex-grow: 1; gap: 15px; align-items: center;">
+                    <div class="stat-pill" style="background: rgba(0, 0, 0, 0.3); padding: 8px 20px; border-radius: 4px; border: 1px solid #30363d; text-align: center; min-width: 100px;">
+                        <small style="display: block; font-size: 9px; color: #8b949e;">CHAPTERS</small>
+                        <span id="stat-chapters" style="font-family: 'Cinzel', serif;">0</span>
+                    </div>
+                    <div class="stat-pill" style="background: rgba(0, 0, 0, 0.3); padding: 8px 20px; border-radius: 4px; border: 1px solid #30363d; text-align: center; min-width: 100px;">
+                        <small style="display: block; font-size: 9px; color: #8b949e;">CATEGORY</small>
+                        <span id="stat-category" style="font-family: 'Cinzel', serif; color: var(--accent);">LORE</span>
+                    </div>
+                    <button class="begin-ritual-btn" onclick="openChapter(0)" style="margin-left: auto; padding: 12px 30px; background: var(--accent); color: #0d1117; border: none; font-family: 'Cinzel', serif; font-weight: bold; cursor: pointer; border-radius: 4px;">
+                        <i class="fas fa-fire"></i> BEGIN READING
+                    </button>
+                </div>
+            </div>
+
+            <div class="archive-main-full" style="width: 100%; clear: both; margin-top: 20px;">
+                <div class="card" style="border-top: 2px solid var(--accent); padding: 30px;">
+                    <h1 id="archive-title" style="font-family: 'Cinzel', serif; text-align: center; font-size: 24px; white-space: normal; line-height: 1.4; margin-bottom: 10px; display: block; width: 100%;">
+                        Title
+                    </h1>
+                    <p id="archive-date" style="text-align: center; font-family: 'Courier New', monospace; font-size: 11px; color: #8b949e; margin-bottom: 30px;">
+                        Sync Date: April 2026
+                    </p>
+
+                    <div class="tab-system">
+                        <div class="tab-triggers" style="display: flex; gap: 25px; border-bottom: 1px solid #30363d; margin-bottom: 20px;">
+                            <button id="btn-synopsis" class="t-btn active" onclick="toggleArchiveTab('synopsis')">SYNOPSIS</button>
+                            <button id="btn-index" class="t-btn" onclick="toggleArchiveTab('index')">INDEX</button>
+                        </div>
+
+                        <div id="tab-synopsis" class="tab-pane active">
+                            <p id="archive-synopsis" style="font-style: italic; color: #acb6c0; border-left: 2px solid var(--accent); padding-left: 15px;">Sinopsis...</p>
+                            <div class="preview-box" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 4px; border: 1px dashed #30363d; margin-top: 20px;">
+                                <small style="color: var(--accent); font-size: 10px; letter-spacing: 1px;">FRAGMENT PREVIEW</small>
+                                <p id="archive-preview" style="font-size: 13px; color: #8b949e; margin-top: 8px;"></p>
+                            </div>
+                        </div>
+
+                        <div id="tab-index" class="tab-pane" style="display:none;">
+                            <div id="chapter-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="text-reader-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #161b22 0%, #0d1117 100%); z-index: 9999; overflow-y: auto; padding: 40px 20px;">
+
+            <div class="reader-frame-decoration top-left"></div>
+            <div class="reader-frame-decoration bottom-right"></div>
+
+            <div style="max-width: 800px; margin: 0 auto; position: relative; background: rgba(22, 27, 34, 0.6); padding: 40px; border: 1px solid rgba(88, 166, 255, 0.1); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 40px;">
+                    <button class="ambient-btn" onclick="closeTextReader()" style="border-color: #ff7b72; color: #ff7b72;">
+                        <i class="fas fa-times-circle"></i> Terminate Ritual
+                    </button>
+                    <div style="text-align: right;">
+                        <span id="reader-page-indicator" style="font-family: 'Courier New', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; display: block;">PART: 1 / 1</span>
+                        <small style="color: #8b949e; font-size: 9px; text-transform: uppercase;">Arcane Buffer Active</small>
+                    </div>
+                </div>
+
+                <div id="actual-content" style="line-height: 2.2; font-size: 19px; color: #adbac7; font-family: 'Inter', sans-serif; white-space: pre-line; min-height: 300px; text-shadow: 0 0 1px rgba(255,255,255,0.1);">
+                </div>
+
+                <div id="reader-footer" style="margin-top: 60px; display: flex; justify-content: center; gap: 30px; border-top: 1px solid #30363d; padding-top: 30px;">
+                </div>
+
+                <div style="width: 100%; height: 2px; background: rgba(255,255,255,0.05); margin-top: 40px; position: relative; overflow: hidden;">
+                    <div class="scanline-effect"></div>
+                </div>
+            </div>
+        </div>
+    </div> ```
+
+    <div id="projects" class="tab-content" style="display: none;">
+        <div class="card">
+            <div class="equipment-section" style="border-bottom: 1px solid #30363d; padding-bottom: 30px; margin-bottom: 30px;">
+                <h3 class="equipment-title" style="text-align: center; margin-bottom: 25px;"><i class="fas fa-shield-halved"></i> Current Loadout</h3>
+                <div class="equipment-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; justify-items: center;">
+
+                    <div class="eq-slot" title="Main Weapon">
+                        <i class="fas fa-microchip eq-icon"></i>
+                        <div class="eq-info"><strong>Runeblade</strong><span>C# / .NET</span></div>
+                    </div>
+
+                    <div class="eq-slot" title="Magic Catalyst">
+                        <i class="fab fa-unity eq-icon" style="color: #ffffff;"></i>
+                        <div class="eq-info"><strong>Amulet</strong><span>Unity Engine</span></div>
+                    </div>
+
+                    <div class="eq-slot" title="Creation Tool">
+                        <i class="fas fa-cube eq-icon" style="color: #ea8220;"></i>
+                        <div class="eq-info"><strong>Chisel</strong><span>Blender 3D</span></div>
+                    </div>
+
+                    <div class="eq-slot" title="Defense">
+                        <i class="fab fa-docker eq-icon"></i>
+                        <div class="eq-info"><strong>Shield</strong><span>Docker</span></div>
+                    </div>
+
+                    <div class="eq-slot" title="Accessory">
+                        <i class="fas fa-dharmachakra eq-icon"></i>
+                        <div class="eq-info"><strong>Ring</strong><span>K8s Cluster</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <h2 class="about-title" style="text-align: center; font-family: 'Cinzel', serif;">⚔️ Armory (Project List)</h2>
+
+            <div class="armory-list" style="display: flex; flex-direction: column; gap: 20px; margin-top: 20px;">
+
+                <div class="project-item-box" style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid #30363d;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="color: var(--accent); margin: 0; font-size: 16px;">🛡️ Agamemons K8s Cluster</h4>
+                            <p style="font-size: 11px; color: #8b949e; margin-top: 4px;">Type: Infrastructure Artefact</p>
+                        </div>
+                        <span class="quest-status" style="font-size: 9px; color: var(--green); border: 1px solid var(--green); padding: 2px 8px; border-radius: 4px;">ACTIVE</span>
+                    </div>
+                    <p style="font-size: 13px; color: #acb6c0; margin: 12px 0;">"Benteng pertahanan server yang dibangun di atas Kind/Minikube untuk orkestrasi mantra kontainer secara otomatis."</p>
+                    <div style="font-size: 12px; color: #8b949e; margin-bottom: 8px;">Power Level: <span style="color: var(--red);">★★★★☆</span></div>
+                    <div class="progress-bg" style="height: 6px;"><div class="progress-fill mana" style="width: 100%; background: var(--accent);"></div></div>
+                    <div style="margin-top: 15px;">
+                        <a href="https://github.com/agamemons" target="_blank" class="ambient-btn" style="text-decoration: none; font-size: 10px; padding: 6px 12px;"><i class="fab fa-github"></i> View Source</a>
+                    </div>
+                </div>
+
+                <div class="project-item-box" style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid #30363d;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="color: #ea8220; margin: 0; font-size: 16px;">🎨 Golem Sculptures</h4>
+                            <p style="font-size: 11px; color: #8b949e; margin-top: 4px;">Type: 3D Art Fragment</p>
+                        </div>
+                        <span class="quest-status" style="font-size: 9px; color: #ea8220; border: 1px solid #ea8220; padding: 2px 8px; border-radius: 4px;">COMPLETED</span>
+                    </div>
+                    <p style="font-size: 13px; color: #acb6c0; margin: 12px 0;">"Koleksi robot komponen dan figurin komersial yang dipahat menggunakan kekuatan Blender."</p>
+                    <div style="font-size: 12px; color: #8b949e; margin-bottom: 8px;">Complexity: <span style="color: #ea8220;">★★★☆☆</span></div>
+                    <div class="progress-bg" style="height: 6px;"><div class="progress-fill exp" style="width: 100%; background: #ea8220;"></div></div>
+                    <div style="margin-top: 15px;">
+                        <a href="#" class="ambient-btn" style="text-decoration: none; font-size: 10px; padding: 6px 12px;"><i class="fas fa-eye"></i> View Gallery</a>
+                    </div>
+                </div>
+
+                <div class="project-item-box" style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid #30363d; opacity: 0.8;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4 style="color: #d299ff; margin: 0; font-size: 16px;">⚔️ Project: C# Logic Core</h4>
+                            <p style="font-size: 11px; color: #8b949e; margin-top: 4px;">Type: Game Mechanic Prototype</p>
+                        </div>
+                        <span class="quest-status" style="font-size: 9px; color: #d299ff; border: 1px solid #d299ff; padding: 2px 8px; border-radius: 4px;">IN PROGRESS</span>
+                    </div>
+                    <p style="font-size: 13px; color: #acb6c0; margin: 12px 0;">"Eksperimen mekanik pergerakan karakter menggunakan C# .NET untuk proyek game indie masa depan."</p>
+                    <div style="font-size: 12px; color: #8b949e; margin-bottom: 8px;">Development: <span style="color: #d299ff;">★★☆☆☆</span></div>
+                    <div class="progress-bg" style="height: 6px;"><div class="progress-fill hp" style="width: 20%; background: #d299ff;"></div></div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="quests" class="tab-content" style="display: none;">
+        <div class="card">
+            <h2 class="about-title"><i class="fas fa-scroll"></i>Main Quest</h2>
+
+            <div class="quest-category">
+                <h4 class="category-label ongoing"><i class="fas fa-dharmachakra"></i> Path: Infrastructure Lord</h4>
+                <div class="quest-card ongoing">
+                    <div class="quest-header">
+                        <span class="quest-title">Mantra of Kubernetes</span>
+                        <span class="quest-difficulty">Hard</span>
+                    </div>
+                    <div class="main-quest-tasks">
+                        <div class="task-item done"><i class="fas fa-check-circle"></i> Setup Local Cluster (Kind/Minikube)</div>
+                        <div class="task-item done"><i class="fas fa-check-circle"></i> Create Namespace & Contexts</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Deploy Agamemons Portal Manifests</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Setup Ingress Controller & Local DNS</div>
+                    </div>
+                    <div class="quest-progress-bar">
+                        <div id="q1-progress" class="progress-fill mana" style="width: 45%;"></div>
+                    </div>
+                    <span id="q1-meta" class="quest-meta">Progress: 45% | Reward: +500 XP</span>
+                </div>
+            </div>
+
+            <div class="quest-category" style="margin-top: 25px;">
+                <h4 class="category-label ongoing"><i class="fas fa-gamepad"></i> Path: Logic Knight</h4>
+                <div class="quest-card ongoing">
+                    <div class="quest-header">
+                        <span class="quest-title">C# Logic Core</span>
+                        <span class="quest-difficulty">Medium</span>
+                    </div>
+                    <div class="main-quest-tasks">
+                        <div class="task-item done"><i class="fas fa-check-circle"></i> Player Input System (WASD)</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Character Controller & Physics</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Basic State Machine (Idle/Run/Jump)</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Prototype Combat/Interaction Logic</div>
+                    </div>
+                    <div class="quest-progress-bar">
+                        <div id="q2-progress" class="progress-fill exp" style="width: 20%;"></div>
+                    </div>
+                    <span id="q2-meta" class="quest-meta">Progress: 20% | Reward: +300 XP</span>
+                </div>
+            </div>
+
+            <div class="quest-category" style="margin-top: 25px;">
+                <h4 class="category-label ongoing" style="color: var(--accent);"><i class="fas fa-tools"></i> Path: The Architect</h4>
+                <div class="quest-card ongoing" style="border-color: rgba(88, 166, 255, 0.3);">
+                    <div class="quest-header">
+                        <span class="quest-title">Portal Maintenance & Expansion</span>
+                        <span class="quest-difficulty" style="border-color: var(--accent); color: var(--accent);">Recurring</span>
+                    </div>
+                    <div class="main-quest-tasks">
+                        <div class="task-item done"><i class="fas fa-check-circle"></i> Implement Cache Buster (Versioning)</div>
+                        <div class="task-item"><i class="far fa-circle"></i> System Hardening: Optimize Docker Image</div>
+                        <div class="task-item"><i class="far fa-circle"></i> Lore Update: Add 2 New Grimoire Fragments</div>
+                        <div class="task-item"><i class="far fa-circle"></i> UI Refinement: Quest Log Interactivity</div>
+                    </div>
+                    <div class="quest-progress-bar">
+                        <div id="q3-progress" class="progress-fill hp" style="width: 60%; background: var(--accent);"></div>
+                    </div>
+                    <span id="q3-meta" class="quest-meta">Maintenance Efficiency: 60% | Status: Stable</span>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #30363d; margin: 30px 0;">
+            <h3 style="font-family: 'Cinzel', serif; font-size: 14px; color: #8b949e;"><i class="fas fa-history"></i> Quest History</h3>
+
+            <div id="quest-completed-list" style="margin-top: 15px;">
+                <p style="color: #8b949e; font-size: 11px; text-align: center; font-style: italic;">
+                    History quest harian akan muncul di sini...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="tab-content" style="display: none;">
+        <div class="card">
+            <h2 class="about-title" style="text-align: center; font-family: 'Cinzel', serif;">About Me</h2>
+
+            <div class="profile-header" style="text-align: center; margin-bottom: 25px;">
+                <div class="profile-avatar">
+                    <img src="img/your-photo.jpg" alt="Deny Adi Faldano">
+                </div>
+                <p class="fantasy-title" style="color: var(--accent); font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 2px;">
+                    [ Warden of the Arcane Infrastructure ]
+                </p>
+            </div>
+
+            <div class="global-rank-box" style="margin-bottom: 30px; text-align: center;">
+                <div style="font-family: 'Cinzel', serif; font-size: 16px; color: var(--accent); margin-bottom: 5px;">
+                    [ <span id="about-class">Terminal Acolyte</span> ]
+                </div>
+                <div class="progress-bg" style="width: 80%; margin: 0 auto; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                    <div id="about-exp-bar" class="progress-fill exp" style="width: 0%; height: 100%; transition: width 1s ease;"></div>
+                </div>
+                <p style="font-size: 10px; color: #8b949e; margin-top: 8px; font-family: 'Courier New', monospace;">
+                    Next Evolution: <span style="color: #fff;">Kernel Alchemist</span> at Level 30
+                </p>
+            </div>
+
+            <div class="loadout-container">
+                <div class="eq-item">
+                    <i class="fas fa-microchip" style="color: var(--accent); font-size: 18px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-size: 9px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px;">OS</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #fff;">Kali / Alpine</div>
+                    </div>
+                </div>
+                <div class="eq-item">
+                    <i class="fas fa-code" style="color: #58a6ff; font-size: 18px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-size: 9px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px;">IDE</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #fff;">VS Code / JetBrains Rider</div>
+                    </div>
+                </div>
+                <div class="eq-item">
+                    <i class="fas fa-hammer" style="color: #ff7b72; font-size: 18px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-size: 9px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px;">Hammer</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #fff;">.NET 8 SDK</div>
+                    </div>
+                </div>
+                <div class="eq-item">
+                    <i class="fas fa-robot" style="color: #d299ff; font-size: 18px;"></i>
+                    <div style="text-align: left;">
+                        <div style="font-size: 9px; color: #8b949e; text-transform: uppercase; letter-spacing: 1px;">Companion</div>
+                        <div style="font-size: 12px; font-weight: 600; color: #fff;">Gemini AI</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="description-text">
+                <p>
+                    In a world where data is as fickle as stardust, I stand as the <strong>Architect of the Void</strong>.
+                    I craft indestructible <strong>Fortresses of Containers</strong>, anchoring them within the shifting mists
+                    of the <strong>Cloud</strong> to withstand the tides of eternal entropy.
+                </p>
+
+                <p>
+                    But my mission transcends the mere forging of infrastructure. I am a weaver of
+                    <strong>Interactive Realms</strong>, breathing life into digital husks through the ancient runes
+                    of C# and the arcane geometries of 3D sculpting. Bridging the legacy of the old world with the
+                    relentless power of the new, I do not just manage systems—I create the very <strong>Battlegrounds</strong>
+                    where logic and imagination collide.
+                </p>
+            </div>
+
+            <div class="skill-grid">
+                <div class="skill-card">
+                    <i class="fab fa-docker" style="font-size: 28px; color: #2496ed;"></i>
+                    <p style="font-size: 12px; margin-top: 10px; font-weight: 600;">Docker / K8s</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-code" style="font-size: 28px; color: #512bd4;"></i>
+                    <p style="font-size: 12px; margin-top: 10px; font-weight: 600;">C# .NET</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-cube" style="font-size: 28px; color: #ea8220;"></i>
+                    <p style="font-size: 12px; margin-top: 10px; font-weight: 600;">Blender Art</p>
+                </div>
+                <div class="skill-card">        
+                    <i class="fab fa-unity eq-icon" style="color: #ffffff;"></i>
+                    <p style="font-size: 12px; margin-top: 10px; font-weight: 600;">Unreal Engine</p>
+                </div>
+            </div>
+            
+            <div class="rpg-medals-section" style="margin-top: 40px; border-top: 1px solid #30363d; padding-top: 30px; text-align: center;">
+                <h3 class="medals-title" style="font-family: 'Cinzel', serif; font-size: 14px; margin-bottom: 20px;"><i class="fas fa-medal"></i> Earned Mastery</h3>
+                <div class="rpg-medals-container" style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                    <div class="rpg-medal-box" style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-size: 12px; border: 1px solid #30363d;">
+                        <i class="fas fa-torii-gate" style="color: #ff7b72; margin-right: 5px;"></i> JLPT N5 Certified
+                    </div>
+                    <div class="rpg-medal-box" style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-size: 12px; border: 1px solid #30363d;">
+                        <i class="fas fa-shield-halved" style="color: var(--accent); margin-right: 5px;"></i> Cloud Protector
+                    </div>
+                    <div class="rpg-medal-box" style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 20px; font-size: 12px; border: 1px solid #30363d;">
+                        <i class="fas fa-paint-brush" style="color: #e3b341; margin-right: 5px;"></i> 3D Modeler
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-card" style="margin-top: 50px; border-top: 1px solid #30363d; padding-top: 30px; text-align: center;">
+                <h3>📬 Dispatch a Messenger</h3>
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+                    <a href="mailto:deny.faldano@example.com" class="ambient-btn" style="text-decoration: none;"><i class="fas fa-paper-plane"></i> Send Scroll</a>
+                    <button class="ambient-btn" onclick="resetHeroStats()"><i class="fas fa-undo"></i> Reset Stats</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="margin-top: 50px; border-top: 1px solid #30363d; padding-top: 40px; padding-bottom: 40px; text-align: center;">
+        <div class="footer-content">
+            <p style="font-size: 12px; color: #8b949e;">&copy; 2026 Agamemons. All Rights Reserved. </p>
+            <div class="footer-controls" style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <div class="social-links" style="display: flex; gap: 20px;">
+                    <a href="#" class="soc-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="soc-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="soc-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+                <button id="ambient-toggle" class="ambient-btn" onclick="toggleMusic()">
+                    <i class="fas fa-music"></i> Ambient: <span id="music-status">OFF</span>
+                </button>
+                <audio id="bg-music" loop src="audio/Avanti - Time.mp3"></audio>
+                <p style="opacity: 0.3; font-size: 10px; margin-top: 10px;">System Version: v<span id="sys-version"></span></p>
+            </div>
+        </div>
+    </footer>
+</div> <script src="js/script.js"></script>
 </body>
 
 </html>

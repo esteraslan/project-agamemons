@@ -11,3 +11,7 @@ obj/
 # JANGAN PUSH FILE INI UNTUK KEAMANAN
 firebase-key.json
 .env
+firebase-key.json
+.env
+bin/
+obj/
